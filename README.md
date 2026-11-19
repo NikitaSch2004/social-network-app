@@ -134,6 +134,8 @@ social-network-app/
    ```
    *The API will be running at `http://127.0.0.1:8000/`.*
 
+> **Configuration:** the backend reads `DJANGO_SECRET_KEY`, `DJANGO_DEBUG` (default `True`, for local development) and `DJANGO_ALLOWED_HOSTS` (default `127.0.0.1,localhost`) from the environment. Nothing needs to be set to run it locally. For any deployment, set `DJANGO_DEBUG=False` and a real `DJANGO_SECRET_KEY`.
+
 ---
 
 ### 2. Frontend Setup

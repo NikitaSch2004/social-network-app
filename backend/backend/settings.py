@@ -1,10 +1,20 @@
+import os
 from pathlib import Path
+
+from django.core.exceptions import ImproperlyConfigured
+from django.core.management.utils import get_random_secret_key
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-replace-this-with-your-secret'
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes')
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured('Set the DJANGO_SECRET_KEY environment variable when DJANGO_DEBUG is off.')
+    SECRET_KEY = get_random_secret_key()
+
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
